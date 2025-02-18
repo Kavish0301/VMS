@@ -1,12 +1,16 @@
 "use client"
+
 import { Search, Home, LayoutDashboard, FileText, LogOut, MoreVertical, PenSquare, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function VendorApproval() {
+  const router = useRouter()
+
   return (
     <div className="min-h-screen flex dark:bg-background">
       {/* Sidebar */}
@@ -141,7 +145,7 @@ export default function VendorApproval() {
                           <PenSquare className="w-4 h-4 mr-2" />
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => router.push("/vendor-approval/view")}>
                           <Eye className="w-4 h-4 mr-2" />
                           View
                         </DropdownMenuItem>
