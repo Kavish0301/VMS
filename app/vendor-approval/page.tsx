@@ -1,0 +1,182 @@
+"use client"
+import { Search, Home, LayoutDashboard, FileText, LogOut, MoreVertical, PenSquare, Eye } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import Link from "next/link"
+
+export default function VendorApproval() {
+  return (
+    <div className="min-h-screen flex dark:bg-background">
+      {/* Sidebar */}
+      <div className="w-64 bg-zinc-900 text-white p-4 space-y-2 hidden md:block">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold">Work Web</h1>
+        </div>
+
+        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
+          <Home className="w-5 h-5" />
+          <span>Home</span>
+        </Link>
+
+        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
+          <LayoutDashboard className="w-5 h-5" />
+          <span>My Dashboard</span>
+        </Link>
+
+        <Link href="#" className="flex items-center gap-3 px-3 py-2 bg-purple-600 text-white rounded-lg">
+          <FileText className="w-5 h-5" />
+          <span>Vendor Approval</span>
+        </Link>
+
+        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
+          <FileText className="w-5 h-5" />
+          <span>RFI</span>
+        </Link>
+
+        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
+          <FileText className="w-5 h-5" />
+          <span>RFI Approval</span>
+        </Link>
+
+        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
+          <FileText className="w-5 h-5" />
+          <span>RFI Response</span>
+        </Link>
+
+        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
+          <FileText className="w-5 h-5" />
+          <span>RFQ</span>
+        </Link>
+
+        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
+          <FileText className="w-5 h-5" />
+          <span>RFQ Approval</span>
+        </Link>
+
+        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
+          <FileText className="w-5 h-5" />
+          <span>RFQ Response</span>
+        </Link>
+
+        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
+          <LogOut className="w-5 h-5" />
+          <span>Log out</span>
+        </Link>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 p-8">
+        <div className="flex justify-between items-center mb-8">
+          <Button className="bg-purple-600 hover:bg-purple-700 text-white">Vendor Approval</Button>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
+            <Input className="pl-10 w-[300px]" type="search" placeholder="Search" />
+          </div>
+        </div>
+
+        {/* Form */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div>
+            <label className="block mb-2 text-sm">Person Name</label>
+            <Input placeholder="Name" />
+          </div>
+          <div>
+            <label className="block mb-2 text-sm">Vendor Name</label>
+            <Input placeholder="Name" />
+          </div>
+          <div>
+            <label className="block mb-2 text-sm">Mobile No</label>
+            <Input placeholder="Name" />
+          </div>
+          <div className="flex items-end gap-4">
+            <div className="flex-1">
+              <label className="block mb-2 text-sm">Email Id</label>
+              <Input placeholder="Name" />
+            </div>
+            <Button className="bg-purple-600 hover:bg-purple-700 text-white">Send</Button>
+          </div>
+        </div>
+
+        {/* Table */}
+        <div className="border rounded-lg">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Vendor Name</TableHead>
+                <TableHead>Person Name</TableHead>
+                <TableHead>Contact No</TableHead>
+                <TableHead>Email Id</TableHead>
+                <TableHead>Level</TableHead>
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>Ananya Joshi</TableCell>
+                <TableCell>Chiku Organization</TableCell>
+                <TableCell>Lorem</TableCell>
+                <TableCell>Lorem</TableCell>
+                <TableCell>
+                  <div className="flex gap-2">
+                    <span className="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm">Approved</span>
+                    <span className="px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-sm">On Hold</span>
+                    <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm">Declined</span>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline" size="sm" className="text-purple-600">
+                      Review
+                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreVertical className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>
+                          <PenSquare className="w-4 h-4 mr-2" />
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Eye className="w-4 h-4 mr-2" />
+                          View
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex justify-end items-center gap-2 mt-4">
+          <Button variant="outline" size="icon">
+            &lt;
+          </Button>
+          <Button variant="outline" size="icon" className="bg-purple-600 text-white">
+            1
+          </Button>
+          <Button variant="outline" size="icon">
+            2
+          </Button>
+          <Button variant="outline" size="icon">
+            3
+          </Button>
+          <Button variant="outline" size="icon">
+            4
+          </Button>
+          <Button variant="outline" size="icon">
+            &gt;
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
