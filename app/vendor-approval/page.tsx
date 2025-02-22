@@ -1,15 +1,18 @@
 "use client"
 
-import { Search, Home, LayoutDashboard, FileText, LogOut, MoreVertical, PenSquare, Eye } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { Search, Home, LayoutDashboard, FileText, LogOut, MoreVertical, PenSquare, Eye, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function VendorApproval() {
-  const router = useRouter()
+  const router = useRouter();
+  const [level, setLevel] = useState("Approved");
+
 
   return (
     <div className="min-h-screen flex dark:bg-background">
@@ -122,18 +125,34 @@ export default function VendorApproval() {
                 <TableCell>Chiku Organization</TableCell>
                 <TableCell>Lorem</TableCell>
                 <TableCell>Lorem</TableCell>
-                <TableCell>
-                  <div className="flex gap-2">
-                    <span className="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm">Approved</span>
-                    <span className="px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-sm">On Hold</span>
-                    <span className="px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm">Declined</span>
-                  </div>
-                </TableCell>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button className={`px-3 py-1 rounded-full text-sm flex items-center gap-2 ${level === "Approved" ? "bg-green-100 text-green-600" :
+                      level === "On Hold" ? "bg-yellow-100 text-yellow-600" :
+                        "bg-red-100 text-red-600"
+                      }`}>
+                      {level}
+                      <ChevronDown className="w-4 h-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    {/* <Button variant="outline" size="sm" className="text-purple-600">
+                      Review
+                    </Button> */}
+                    <DropdownMenuItem onClick={() => setLevel("Approved")}>
+                      Approved
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLevel("On Hold")}>
+                      On Hold
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLevel("Declined")}>
+                      Declined
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="text-purple-600">
-                      Review
-                    </Button>
+
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon">
