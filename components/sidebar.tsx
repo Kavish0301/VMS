@@ -68,7 +68,7 @@ const routes = [
 
 export function Sidebar() {
   return (
-    <div className="space-y-4 py-4 flex flex-col h-full bg-gray-900 text-white w-64">
+    <div className="space-y-4 py-4 flex flex-col h-full bg-zinc-900 text-white w-64">
       <div className="px-3 py-2">
         <h2 className="text-2xl font-bold">Work Web</h2>
       </div>
@@ -78,8 +78,8 @@ export function Sidebar() {
             key={route.href}
             href={route.href}
             className={cn(
-              "text-sm flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-800 transition",
-              route.label === "Purchase Requisition" && "bg-purple-700",
+              "text-sm flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-purple-700 transition",
+
             )}
           >
             <route.icon className="h-4 w-4" />

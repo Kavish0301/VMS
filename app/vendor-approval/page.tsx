@@ -17,61 +17,7 @@ export default function VendorApproval() {
   return (
     <div className="min-h-screen flex dark:bg-background">
       {/* Sidebar */}
-      <div className="w-64 bg-zinc-900 text-white p-4 space-y-2 hidden md:block">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold">Work Web</h1>
-        </div>
 
-        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
-          <Home className="w-5 h-5" />
-          <span>Home</span>
-        </Link>
-
-        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
-          <LayoutDashboard className="w-5 h-5" />
-          <span>My Dashboard</span>
-        </Link>
-
-        <Link href="#" className="flex items-center gap-3 px-3 py-2 bg-purple-600 text-white rounded-lg">
-          <FileText className="w-5 h-5" />
-          <span>Vendor Approval</span>
-        </Link>
-
-        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
-          <FileText className="w-5 h-5" />
-          <span>RFI</span>
-        </Link>
-
-        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
-          <FileText className="w-5 h-5" />
-          <span>RFI Approval</span>
-        </Link>
-
-        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
-          <FileText className="w-5 h-5" />
-          <span>RFI Response</span>
-        </Link>
-
-        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
-          <FileText className="w-5 h-5" />
-          <span>RFQ</span>
-        </Link>
-
-        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
-          <FileText className="w-5 h-5" />
-          <span>RFQ Approval</span>
-        </Link>
-
-        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
-          <FileText className="w-5 h-5" />
-          <span>RFQ Response</span>
-        </Link>
-
-        <Link href="#" className="flex items-center gap-3 px-3 py-2 text-gray-300 hover:bg-zinc-800 rounded-lg">
-          <LogOut className="w-5 h-5" />
-          <span>Log out</span>
-        </Link>
-      </div>
 
       {/* Main Content */}
       <div className="flex-1 p-8">
