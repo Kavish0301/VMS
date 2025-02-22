@@ -3,27 +3,12 @@
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-// Define column types
-interface Data {
-    id: string;
-    name: string;
-    email: string;
+interface DataTableProps<T> {
+    data: T[];
+    columns: ColumnDef<T>[];
 }
 
-// Sample data
-const defaultData: Data[] = [
-    { id: "1", name: "John Doe", email: "john@example.com" },
-    { id: "2", name: "Jane Smith", email: "jane@example.com" },
-];
-
-// Define columns
-const columns: ColumnDef<Data>[] = [
-    { accessorKey: "id", header: "ID" },
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "email", header: "Email" },
-];
-
-export function DataTable({ data = defaultData }: { data?: Data[] }) {
+export function DataTable<T>({ data, columns }: DataTableProps<T>) {
     const table = useReactTable({
         data,
         columns,

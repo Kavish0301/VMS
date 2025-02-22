@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Eye, Edit, Square, Pause, Trash2, MoreVertical } from "lucide-react"
-import { DataTable } from "@/components/ui/data-table"
+import { DataTable } from "../../components/ui/data-table";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { StatusBadge } from "@/components/ui/status-badge"
@@ -139,7 +139,8 @@ export default function RFIApprovalPage() {
         <h1 className="text-xl font-semibold">RFI Approval</h1>
         <Input type="search" placeholder="Search" className="w-64" />
       </div>
-      <DataTable columns={columns} data={data} />
+      <DataTable<RFIApproval> columns={columns} data={data} />
+
 
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
