@@ -47,24 +47,26 @@ export default function RFIPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8]">
-      <Sidebar />
+    <div className="min-h-screen flex bg-[#F8F8F8]">
+      {/* Sidebar (Fixed Width) */}
+      <aside className="w-64 min-h-screen bg-white shadow-lg">
+        <Sidebar />
+      </aside>
 
-      <div className="ml-[200px] p-6">
+      {/* Main Content (Takes Remaining Space) */}
+      <main className="flex-1 p-6">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-2">
             <div className="bg-[#6C47FF] text-white px-3 py-1 rounded-md">RFI</div>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-              <Input
-                placeholder="Search"
-                className="pl-10 w-[300px]"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <Input
+              placeholder="Search"
+              className="pl-10 w-[300px]"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
         </div>
 
@@ -113,18 +115,10 @@ export default function RFIPage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
-                            <Edit2 className="mr-2" size={14} /> Edit
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Eye className="mr-2" size={14} /> View
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <StopCircle className="mr-2" size={14} /> Stop
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <PauseCircle className="mr-2" size={14} /> Pause
-                          </DropdownMenuItem>
+                          <DropdownMenuItem><Edit2 className="mr-2" size={14} /> Edit</DropdownMenuItem>
+                          <DropdownMenuItem><Eye className="mr-2" size={14} /> View</DropdownMenuItem>
+                          <DropdownMenuItem><StopCircle className="mr-2" size={14} /> Stop</DropdownMenuItem>
+                          <DropdownMenuItem><PauseCircle className="mr-2" size={14} /> Pause</DropdownMenuItem>
                           <DropdownMenuItem className="text-red-600" onClick={() => handleDelete(rfi.id)}>
                             <Trash2 className="mr-2" size={14} /> Delete
                           </DropdownMenuItem>
@@ -136,28 +130,8 @@ export default function RFIPage() {
               </tbody>
             </table>
           </div>
-
-          <div className="p-4 flex items-center justify-center gap-1">
-            <Button variant="outline" size="icon" onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>
-              <ChevronLeft size={16} />
-            </Button>
-            {[1, 2, 3, 4].map((page) => (
-              <Button
-                key={page}
-                variant={currentPage === page ? "default" : "outline"}
-                size="icon"
-                onClick={() => setCurrentPage(page)}
-              >
-                {page}
-              </Button>
-            ))}
-            <Button variant="outline" size="icon" onClick={() => setCurrentPage((p) => p + 1)}>
-              <ChevronRight size={16} />
-            </Button>
-          </div>
         </div>
-      </div>
+      </main>
     </div>
   )
 }
-

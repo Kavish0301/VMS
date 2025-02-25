@@ -13,7 +13,7 @@ import {
 
 export function Sidebar() {
   return (
-    <div className="fixed left-0 top-0 h-full w-[200px] bg-[#1C1C1C] text-white">
+    <div className="fixed left-0 top-0 h-full w-[252px] bg-[#1C1C1C] text-white">
       <div className="p-4 border-b border-gray-800">
         <h1 className="text-xl font-serif">Work Web</h1>
       </div>
@@ -25,9 +25,8 @@ export function Sidebar() {
         <SidebarLink href="/rfi" icon={<FileTextIcon size={18} />} label="RFI" isActive />
         <SidebarLink href="/rfi-approval" icon={<CheckSquareIcon size={18} />} label="RFI Approval" />
         <SidebarLink href="/rfi-response" icon={<MessageSquareIcon size={18} />} label="RFI Response" />
-        <SidebarLink href="/rfq" icon={<HelpCircleIcon size={18} />} label="RFQ" />
-        <SidebarLink href="/rfq-approval" icon={<CheckSquareIcon size={18} />} label="RFQ Approval" />
-        <SidebarLink href="/rfq-response" icon={<MessageSquareIcon size={18} />} label="RFQ Response" />
+        <SidebarLink href="/purchase-requisition" icon={<HelpCircleIcon size={18} />} label="Purchase Requisition" />
+
         <SidebarLink href="/logout" icon={<LogOutIcon size={18} />} label="Log out" />
       </nav>
     </div>
@@ -43,9 +42,8 @@ function SidebarLink({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-3 px-4 py-2 rounded-lg text-sm ${
-        isActive ? "bg-[#6C47FF] text-white" : "text-gray-300 hover:bg-gray-800"
-      }`}
+      className={`flex items-center gap-3 px-4 py-2 hover:bg-[#6C47FF] rounded-lg text-sm ${isActive ? " text-white" : "text-gray-300 hover:bg-gray-800"
+        }`}
     >
       {icon}
       <span>{label}</span>

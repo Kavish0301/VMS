@@ -8,6 +8,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Sidebar } from "@/components/sidebar";
 
 export default function VendorApproval() {
   const router = useRouter();
@@ -18,6 +19,9 @@ export default function VendorApproval() {
     <div className="min-h-screen flex dark:bg-background">
       {/* Sidebar */}
 
+      <div className="w-64 min-h-screen bg-white shadow-lg">
+        <Sidebar />
+      </div>
 
       {/* Main Content */}
       <div className="flex-1 p-8">
@@ -76,8 +80,8 @@ export default function VendorApproval() {
                     <DropdownMenuTrigger asChild>
                       <Button
                         className={`px-3 py-1 rounded-full text-sm flex items-center gap-2 ${level === "Approved" ? "bg-green-100 text-green-600" :
-                            level === "On Hold" ? "bg-yellow-100 text-yellow-600" :
-                              "bg-red-100 text-red-600"
+                          level === "On Hold" ? "bg-yellow-100 text-yellow-600" :
+                            "bg-red-100 text-red-600"
                           }`}
                       >
                         {level}

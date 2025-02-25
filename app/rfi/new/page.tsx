@@ -39,11 +39,12 @@ export default function NewRFIPage() {
 
   const handleInputChange = (field: string, value: string) => {
     if (field.includes(".")) {
-      const [parent, child] = field.split(".")
+      const [parent, child] = field.split(".") as [keyof typeof formData, string]
+
       setFormData((prev) => ({
         ...prev,
         [parent]: {
-          ...prev[parent as keyof typeof prev],
+          ...(prev[parent] as Record<string, any>), // ✅ Explicitly cast as object
           [child]: value,
         },
       }))
@@ -91,10 +92,13 @@ export default function NewRFIPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8]">
-      <Sidebar />
+    <div className="min-h-screen bg-[#F8F8F8] flex">
+      {/* Sidebar */}
+      <div className="w-64 min-h-screen bg-white shadow-lg">
+        <Sidebar />
+      </div>
 
-      <div className="ml-[200px] p-6">
+      <div className="ml-[50px] p-6 " style={{ width: "85vw" }}>
         <div className="mb-6">
           <div className="text-sm text-gray-600">RFI {">"} Add RFI</div>
         </div>

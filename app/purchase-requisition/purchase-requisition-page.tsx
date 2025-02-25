@@ -14,6 +14,7 @@ import { QuerySection } from "@/components/query-section"
 import { toast } from "sonner"
 import type { PurchaseRequisition } from "@/lib/types"
 import { MANDATORY_SOW_CHECKLIST, getDepartmentHead, getBillingLocation } from "@/lib/types"
+import { Sidebar } from "@/components/sidebar"
 
 const initialState: PurchaseRequisition = {
   tempId: "TEMP-" + Math.random().toString(36).substring(7).toUpperCase(),
@@ -114,138 +115,144 @@ export function PurchaseRequisitionPage() {
   }, [])
 
   return (
-    <div className="p-6 max-w-[1200px] mx-auto">
-      <h1 className="text-2xl font-semibold mb-6">Purchase Requisition</h1>
-
-      {showSuccess && (
-        <Alert className="mb-6 bg-orange-500 text-white">
-          <CheckCircle2 className="h-4 w-4" />
-          <AlertDescription>Nice! Purchase request has been Successfully Sent for Approval.</AlertDescription>
-        </Alert>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Temp ID</label>
-          <Input value={formData.tempId} disabled placeholder="Autofill" />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">PR NO</label>
-          <Input value={formData.prNo} disabled placeholder="Autofill" />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Requested By</label>
-          <Input value={formData.requestedBy} disabled placeholder="Autofill" />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Department</label>
-          <Select value={formData.department} onValueChange={handleDepartmentChange}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="IT">IT</SelectItem>
-              <SelectItem value="HR">HR</SelectItem>
-              <SelectItem value="Finance">Finance</SelectItem>
-              <SelectItem value="Operations">Operations</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Department Head</label>
-          <Input value={formData.departmentHead} disabled placeholder="Autofill" />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Type of Requirement</label>
-          <Select
-            value={formData.requirementType}
-            onValueChange={(value: "service" | "product" | "project") =>
-              setFormData((prev) => ({ ...prev, requirementType: value }))
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="service">Service</SelectItem>
-              <SelectItem value="product">Product</SelectItem>
-              <SelectItem value="project">Project</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Delivery on or before</label>
-          <Input
-            type="date"
-            value={formData.deliveryDate}
-            onChange={(e) => setFormData((prev) => ({ ...prev, deliveryDate: e.target.value }))}
-          />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Billing Location</label>
-          <Input value={formData.billingLocation} disabled placeholder="Autofill" />
-        </div>
+    <div className="min-h-screen bg-[#F8F8F8] flex">
+      {/* Sidebar */}
+      <div className="w-64 min-h-screen bg-white shadow-lg">
+        <Sidebar />
       </div>
+      <div className="p-6 max-w-[1200px] mx-auto">
+        <h1 className="text-2xl font-semibold mb-6">Purchase Requisition</h1>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="bg-gray-100 p-1 rounded-md">
-          <TabsTrigger
-            value="product-details"
-            className="data-[state=active]:bg-purple-600 data-[state=active]:text-white"
-          >
-            Product Details
-          </TabsTrigger>
-          <TabsTrigger value="sow" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-            SOW
-          </TabsTrigger>
-          <TabsTrigger value="attachment" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-            Other Attachment
-          </TabsTrigger>
-          <TabsTrigger value="query" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
-            Query
-          </TabsTrigger>
-        </TabsList>
+        {showSuccess && (
+          <Alert className="mb-6 bg-orange-500 text-white">
+            <CheckCircle2 className="h-4 w-4" />
+            <AlertDescription>Nice! Purchase request has been Successfully Sent for Approval.</AlertDescription>
+          </Alert>
+        )}
 
-        <TabsContent value="product-details">
-          <ProductDetails
-            type={formData.requirementType}
-            products={formData.products}
-            services={formData.services}
-            purpose={formData.purpose}
-            onPurposeChange={(purpose) => setFormData((prev) => ({ ...prev, purpose }))}
-            onProductsChange={handleProductsChange}
-            onServicesChange={handleServicesChange}
-          />
-        </TabsContent>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Temp ID</label>
+            <Input value={formData.tempId} disabled placeholder="Autofill" />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">PR NO</label>
+            <Input value={formData.prNo} disabled placeholder="Autofill" />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Requested By</label>
+            <Input value={formData.requestedBy} disabled placeholder="Autofill" />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Department</label>
+            <Select value={formData.department} onValueChange={handleDepartmentChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="IT">IT</SelectItem>
+                <SelectItem value="HR">HR</SelectItem>
+                <SelectItem value="Finance">Finance</SelectItem>
+                <SelectItem value="Operations">Operations</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Department Head</label>
+            <Input value={formData.departmentHead} disabled placeholder="Autofill" />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Type of Requirement</label>
+            <Select
+              value={formData.requirementType}
+              onValueChange={(value: "service" | "product" | "project") =>
+                setFormData((prev) => ({ ...prev, requirementType: value }))
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="service">Service</SelectItem>
+                <SelectItem value="product">Product</SelectItem>
+                <SelectItem value="project">Project</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Delivery on or before</label>
+            <Input
+              type="date"
+              value={formData.deliveryDate}
+              onChange={(e) => setFormData((prev) => ({ ...prev, deliveryDate: e.target.value }))}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Billing Location</label>
+            <Input value={formData.billingLocation} disabled placeholder="Autofill" />
+          </div>
+        </div>
 
-        <TabsContent value="sow">
-          <SOWChecklist
-            checklist={formData.sowChecklist}
-            onChange={(sowChecklist) => setFormData((prev) => ({ ...prev, sowChecklist }))}
-          />
-        </TabsContent>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 ">
+          <TabsList className="bg-gray-100 p-1 rounded-md">
+            <TabsTrigger
+              value="product-details"
+              className="data-[state=active]:bg-purple-600 data-[state=active]:text-white"
+            >
+              Product Details
+            </TabsTrigger>
+            <TabsTrigger value="sow" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
+              SOW
+            </TabsTrigger>
+            <TabsTrigger value="attachment" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
+              Other Attachment
+            </TabsTrigger>
+            <TabsTrigger value="query" className="data-[state=active]:bg-purple-600 data-[state=active]:text-white">
+              Query
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="attachment">
-          <Attachments
-            attachments={formData.attachments}
-            onChange={(attachments) => setFormData((prev) => ({ ...prev, attachments }))}
-          />
-        </TabsContent>
+          <TabsContent value="product-details">
+            <ProductDetails
+              type={formData.requirementType}
+              products={formData.products}
+              services={formData.services}
+              purpose={formData.purpose}
+              onPurposeChange={(purpose) => setFormData((prev) => ({ ...prev, purpose }))}
+              onProductsChange={handleProductsChange}
+              onServicesChange={handleServicesChange}
+            />
+          </TabsContent>
 
-        <TabsContent value="query">
-          <QuerySection
-            query={formData.query}
-            onChange={(query) => setFormData((prev) => ({ ...prev, query }))}
-            onSubmit={handleSubmit}
-          />
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="sow">
+            <SOWChecklist
+              checklist={formData.sowChecklist}
+              onChange={(sowChecklist) => setFormData((prev) => ({ ...prev, sowChecklist }))}
+            />
+          </TabsContent>
 
-      <div className="flex justify-end gap-4 mt-6">
-        <Button variant="outline" onClick={handleSave} disabled={isSaving} className="gap-2">
-          <Save className="h-4 w-4" />
-          {isSaving ? "Saving..." : "Save Details"}
-        </Button>
+          <TabsContent value="attachment">
+            <Attachments
+              attachments={formData.attachments}
+              onChange={(attachments) => setFormData((prev) => ({ ...prev, attachments }))}
+            />
+          </TabsContent>
+
+          <TabsContent value="query">
+            <QuerySection
+              query={formData.query}
+              onChange={(query) => setFormData((prev) => ({ ...prev, query }))}
+              onSubmit={handleSubmit}
+            />
+          </TabsContent>
+        </Tabs>
+
+        <div className="flex justify-end gap-4 mt-6">
+          <Button variant="outline" onClick={handleSave} disabled={isSaving} className="gap-2">
+            <Save className="h-4 w-4" />
+            {isSaving ? "Saving..." : "Save Details"}
+          </Button>
+        </div>
       </div>
     </div>
   )

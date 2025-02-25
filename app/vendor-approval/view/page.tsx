@@ -7,12 +7,16 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { Sidebar } from "@/components/sidebar"
 
 export default function VendorDetails() {
     const router = useRouter()
 
     return (
         <div className="min-h-screen flex bg-background">
+            <div className="w-64 min-h-screen bg-white shadow-lg">
+                <Sidebar />
+            </div>
             {/* Sidebar */}
 
             {/* Main Content */}
