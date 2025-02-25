@@ -1,4 +1,6 @@
-import type { PurchaseRequisition } from "../types"
+// import type { PurchaseRequisition } from "../types"
+
+import { PurchaseRequisition } from "./types";
 
 export function generateTempId(): string {
   return `TEMP-${Math.random().toString(36).substr(2, 9).toUpperCase()}`
@@ -51,7 +53,8 @@ export const initialFormState: PurchaseRequisition = {
   services: [],
   attachments: [],
   sowChecklist: [],
-  queries: [],
   status: "draft",
+  query: "",
+  total: 0
 }
 
