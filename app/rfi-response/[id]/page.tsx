@@ -247,10 +247,15 @@ export default function RFIResponseView() {
                         <input
                           type="file"
                           className="hidden"
-                          ref={(el) => (fileInputRefs.current[activity.id] = el)}
+                          // ref={(el) => (fileInputRefs.current[activity.id] = el)} // Corrected ref usage
                           onChange={(e) => handleFileChange(activity.id, e)}
                         />
-                        <Button type="button" variant="outline" size="sm" onClick={() => handleFileUpload(activity.id)}>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleFileUpload(activity.id)}
+                        >
                           <Upload className="h-4 w-4 mr-2" />
                           {activity.file ? activity.file.name : "Upload"}
                         </Button>
