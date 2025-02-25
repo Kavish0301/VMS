@@ -1,198 +1,162 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Eye, Edit, Square, Pause, Trash2, Plus, MoreVertical } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { StatusBadge } from "@/components/ui/status-badge"
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+  MoreVertical,
+  Edit2,
+  Eye,
+  StopCircle,
+  PauseCircle,
+  Trash2,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-
-interface RFI {
-  id: number
-  rfiName: string
-  organization: string
-  startDate: string
-  endDate: string
-  dateAdded: string
-  lastUpdated: string
-  status: "Active" | "Close" | "Stopped" | "Paused"
-}
-
-const initialData: RFI[] = [
-  {
-    id: 1,
-    rfiName: "RFI Demo",
-    organization: "Chiku Organization",
-    startDate: "12/02/2024",
-    endDate: "19/02/2024",
-    dateAdded: "10/02/2024",
-    lastUpdated: "11/02/2024",
-    status: "Active",
-  },
-  {
-    id: 2,
-    rfiName: "RFI Demo 2",
-    organization: "Tech Solutions",
-    startDate: "15/02/2024",
-    endDate: "22/02/2024",
-    dateAdded: "14/02/2024",
-    lastUpdated: "14/02/2024",
-    status: "Active",
-  },
-]
+import { Sidebar } from "@/components/sidebar"
+import Link from "next/link"
+import { useRFIStore } from "@/lib/store"
+import { format } from "date-fns"
 
 export default function RFIPage() {
-  const router = useRouter()
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  const [selectedRFI, setSelectedRFI] = useState<RFI | null>(null)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [data, setData] = useState(initialData)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [searchQuery, setSearchQuery] = useState("")
+  const rfis = useRFIStore((state) => state.rfis)
+  const deleteRFI = useRFIStore((state) => state.deleteRFI)
 
-  const filteredData = data.filter((item) =>
-    Object.values(item).some((value) => value.toString().toLowerCase().includes(searchTerm.toLowerCase())),
+  const filteredRFIs = rfis.filter(
+    (rfi) =>
+      rfi.rfiName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      rfi.rfiNumber.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
-  const handleView = (rfi: RFI) => {
-    router.push(`/rfi/${rfi.id}`)
+  const formatDate = (dateString: string) => {
+    try {
+      return format(new Date(dateString), "dd-MM-yyyy")
+    } catch {
+      return dateString
+    }
   }
 
-  const handleEdit = (rfi: RFI) => {
-    router.push(`/rfi/${rfi.id}/edit`)
-  }
-
-  const handleStop = (rfi: RFI) => {
-    setData(data.map((item) => (item.id === rfi.id ? { ...item, status: "Stopped" as const } : item)))
-  }
-
-  const handlePause = (rfi: RFI) => {
-    setData(data.map((item) => (item.id === rfi.id ? { ...item, status: "Paused" as const } : item)))
-  }
-
-  const handleDelete = (rfi: RFI) => {
-    setSelectedRFI(rfi)
-    setShowDeleteDialog(true)
-  }
-
-  const confirmDelete = () => {
-    if (selectedRFI) {
-      setData(data.filter((item) => item.id !== selectedRFI.id))
-      setShowDeleteDialog(false)
-      setSelectedRFI(null)
+  const handleDelete = (id: number) => {
+    if (window.confirm("Are you sure you want to delete this RFI?")) {
+      deleteRFI(id)
     }
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">RFI Management</h1>
-        <div className="flex gap-4">
-          <Input
-            type="search"
-            placeholder="Search"
-            className="w-64"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <Button onClick={() => router.push("/rfi/new")}>
-            <Plus className="h-4 w-4 mr-2" />
-            Create New RFI
-          </Button>
+    <div className="min-h-screen bg-[#F8F8F8]">
+      <Sidebar />
+
+      <div className="ml-[200px] p-6">
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center gap-2">
+            <div className="bg-[#6C47FF] text-white px-3 py-1 rounded-md">RFI</div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <Input
+                placeholder="Search"
+                className="pl-10 w-[300px]"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow">
+          <div className="p-4 border-b">
+            <Link href="/rfi/new">
+              <Button variant="outline" className="text-[#6C47FF] border-[#6C47FF]">
+                + Add New RFI
+              </Button>
+            </Link>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b bg-gray-50">
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">S.No</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">RFI Name</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">RFI Start Date</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">RFI End Date</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Approval</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Date Added</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Last Updated</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Status</th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredRFIs.map((rfi, index) => (
+                  <tr key={rfi.id} className="border-b">
+                    <td className="px-4 py-3 text-sm">{index + 1}</td>
+                    <td className="px-4 py-3 text-sm">{rfi.rfiName}</td>
+                    <td className="px-4 py-3 text-sm">{formatDate(rfi.startDate)}</td>
+                    <td className="px-4 py-3 text-sm">{formatDate(rfi.endDate)}</td>
+                    <td className="px-4 py-3 text-sm">{rfi.approval}</td>
+                    <td className="px-4 py-3 text-sm">{formatDate(rfi.dateAdded)}</td>
+                    <td className="px-4 py-3 text-sm">{formatDate(rfi.lastUpdated)}</td>
+                    <td className="px-4 py-3 text-sm">
+                      <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{rfi.status}</span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon">
+                            <MoreVertical size={16} />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem>
+                            <Edit2 className="mr-2" size={14} /> Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Eye className="mr-2" size={14} /> View
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <StopCircle className="mr-2" size={14} /> Stop
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <PauseCircle className="mr-2" size={14} /> Pause
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-red-600" onClick={() => handleDelete(rfi.id)}>
+                            <Trash2 className="mr-2" size={14} /> Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="p-4 flex items-center justify-center gap-1">
+            <Button variant="outline" size="icon" onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>
+              <ChevronLeft size={16} />
+            </Button>
+            {[1, 2, 3, 4].map((page) => (
+              <Button
+                key={page}
+                variant={currentPage === page ? "default" : "outline"}
+                size="icon"
+                onClick={() => setCurrentPage(page)}
+              >
+                {page}
+              </Button>
+            ))}
+            <Button variant="outline" size="icon" onClick={() => setCurrentPage((p) => p + 1)}>
+              <ChevronRight size={16} />
+            </Button>
+          </div>
         </div>
       </div>
-
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>S.No</TableHead>
-              <TableHead>RFI Name</TableHead>
-              <TableHead>Organization</TableHead>
-              <TableHead>RFI Start Date</TableHead>
-              <TableHead>RFI End Date</TableHead>
-              <TableHead>Date Added</TableHead>
-              <TableHead>Last Updated</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filteredData.map((rfi) => (
-              <TableRow key={rfi.id}>
-                <TableCell>{rfi.id}</TableCell>
-                <TableCell>{rfi.rfiName}</TableCell>
-                <TableCell>{rfi.organization}</TableCell>
-                <TableCell>{rfi.startDate}</TableCell>
-                <TableCell>{rfi.endDate}</TableCell>
-                <TableCell>{rfi.dateAdded}</TableCell>
-                <TableCell>{rfi.lastUpdated}</TableCell>
-                <TableCell>
-                  <StatusBadge status={rfi.status} />
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-40">
-                      <DropdownMenuItem onClick={() => handleView(rfi)}>
-                        <Eye className="h-4 w-4 mr-2" />
-                        View
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleEdit(rfi)}>
-                        <Edit className="h-4 w-4 mr-2" />
-                        Edit
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleStop(rfi)}>
-                        <Square className="h-4 w-4 mr-2" />
-                        Stop
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handlePause(rfi)}>
-                        <Pause className="h-4 w-4 mr-2" />
-                        Pause
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleDelete(rfi)} className="text-red-600">
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the RFI and remove it from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDelete} className="bg-red-600">
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   )
 }

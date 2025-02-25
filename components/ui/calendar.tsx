@@ -1,13 +1,31 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import * as React from "react";
+import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from "lucide-react";
+import { DayPicker } from "react-day-picker";
+import { format } from "date-fns";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+// Define the custom Chevron component
+function CustomChevron(props: {
+  orientation?: "left" | "right" | "up" | "down";
+  className?: string;
+}) {
+  const { orientation = "right", className } = props; // Default to "right" if undefined
+
+  const Icon = {
+    left: ChevronLeft,
+    right: ChevronRight,
+    up: ChevronUp,
+    down: ChevronDown,
+  }[orientation] || ChevronRight; // Default to right if orientation is invalid
+
+  return <Icon className={className} />;
+}
+
+export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
 function Calendar({
   className,
@@ -54,13 +72,16 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
-        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+        Chevron: CustomChevron,
+      }}
+      formatters={{
+        formatCaption: (date) => format(date, "LLLL yyyy"),
       }}
       {...props}
     />
-  )
+  );
 }
-Calendar.displayName = "Calendar"
 
-export { Calendar }
+Calendar.displayName = "Calendar";
+
+export { Calendar };

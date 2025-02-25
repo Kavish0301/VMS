@@ -1,102 +1,55 @@
+import type React from "react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 import {
-  Home,
-  LayoutGrid,
-  UserCheck,
-  Calendar,
-  ClipboardList,
-  LogOut,
-  MessagesSquare,
-  FileQuestion,
-  FileCheck,
-  FileText,
+  HomeIcon,
+  LayoutDashboardIcon,
+  UserCheckIcon,
+  FileTextIcon,
+  CheckSquareIcon,
+  MessageSquareIcon,
+  HelpCircleIcon,
+  LogOutIcon,
 } from "lucide-react"
-
-const routes = [
-  {
-    label: "Home",
-    icon: Home,
-    href: "/",
-  },
-  {
-    label: "My Dashboard",
-    icon: LayoutGrid,
-    href: "/dashboard",
-  },
-  {
-    label: "Vendor Approval",
-    icon: UserCheck,
-    href: "/vendor-approval",
-  },
-  {
-    label: "RFI",
-    icon: Calendar,
-    href: "/rfi",
-  },
-  {
-    label: "RFI Approval",
-    icon: ClipboardList,
-    href: "/rfi-approval",
-  },
-  {
-    label: "RFI Response",
-    icon: MessagesSquare,
-    href: "/rfi-response",
-  },
-  {
-    label: "RFQ",
-    icon: FileQuestion,
-    href: "/rfq",
-  },
-  {
-    label: "RFQ Approval",
-    icon: FileCheck,
-    href: "/rfq-approval",
-  },
-  {
-    label: "RFQ Response",
-    icon: FileText,
-    href: "/rfq-response",
-  },
-  {
-    label: "Purchase Requisition",
-    icon: ClipboardList,
-    href: "/purchase-requisition",
-  },
-]
 
 export function Sidebar() {
   return (
-    <div className="space-y-4 py-4 flex flex-col h-full bg-zinc-900 text-white w-64">
-      <div className="px-3 py-2">
-        <h2 className="text-2xl font-bold">Work Web</h2>
+    <div className="fixed left-0 top-0 h-full w-[200px] bg-[#1C1C1C] text-white">
+      <div className="p-4 border-b border-gray-800">
+        <h1 className="text-xl font-serif">Work Web</h1>
       </div>
-      <div className="space-y-1 px-3">
-        {routes.map((route) => (
-          <Link
-            key={route.href}
-            href={route.href}
-            className={cn(
-              "text-sm flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-purple-700 transition",
 
-            )}
-          >
-            <route.icon className="h-4 w-4" />
-            {route.label}
-          </Link>
-        ))}
-      </div>
-      <div className="mt-auto px-3">
-        <Link
-          href="/logout"
-          className="text-sm flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-800 transition"
-        >
-          <LogOut className="h-4 w-4" />
-          Log out
-        </Link>
-      </div>
+      <nav className="p-2">
+        <SidebarLink href="/" icon={<HomeIcon size={18} />} label="Home" />
+        <SidebarLink href="/dashboard" icon={<LayoutDashboardIcon size={18} />} label="My Dashboard" />
+        <SidebarLink href="/vendor-approval" icon={<UserCheckIcon size={18} />} label="Vendor Approval" />
+        <SidebarLink href="/rfi" icon={<FileTextIcon size={18} />} label="RFI" isActive />
+        <SidebarLink href="/rfi-approval" icon={<CheckSquareIcon size={18} />} label="RFI Approval" />
+        <SidebarLink href="/rfi-response" icon={<MessageSquareIcon size={18} />} label="RFI Response" />
+        <SidebarLink href="/rfq" icon={<HelpCircleIcon size={18} />} label="RFQ" />
+        <SidebarLink href="/rfq-approval" icon={<CheckSquareIcon size={18} />} label="RFQ Approval" />
+        <SidebarLink href="/rfq-response" icon={<MessageSquareIcon size={18} />} label="RFQ Response" />
+        <SidebarLink href="/logout" icon={<LogOutIcon size={18} />} label="Log out" />
+      </nav>
     </div>
+  )
+}
+
+function SidebarLink({
+  href,
+  icon,
+  label,
+  isActive,
+}: { href: string; icon: React.ReactNode; label: string; isActive?: boolean }) {
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-3 px-4 py-2 rounded-lg text-sm ${
+        isActive ? "bg-[#6C47FF] text-white" : "text-gray-300 hover:bg-gray-800"
+      }`}
+    >
+      {icon}
+      <span>{label}</span>
+    </Link>
   )
 }
 

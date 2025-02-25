@@ -71,34 +71,28 @@ export default function VendorApproval() {
                 <TableCell>Chiku Organization</TableCell>
                 <TableCell>Lorem</TableCell>
                 <TableCell>Lorem</TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button className={`px-3 py-1 rounded-full text-sm flex items-center gap-2 ${level === "Approved" ? "bg-green-100 text-green-600" :
-                      level === "On Hold" ? "bg-yellow-100 text-yellow-600" :
-                        "bg-red-100 text-red-600"
-                      }`}>
-                      {level}
-                      <ChevronDown className="w-4 h-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    {/* <Button variant="outline" size="sm" className="text-purple-600">
-                      Review
-                    </Button> */}
-                    <DropdownMenuItem onClick={() => setLevel("Approved")}>
-                      Approved
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setLevel("On Hold")}>
-                      On Hold
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setLevel("Declined")}>
-                      Declined
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        className={`px-3 py-1 rounded-full text-sm flex items-center gap-2 ${level === "Approved" ? "bg-green-100 text-green-600" :
+                            level === "On Hold" ? "bg-yellow-100 text-yellow-600" :
+                              "bg-red-100 text-red-600"
+                          }`}
+                      >
+                        {level}
+                        <ChevronDown className="w-4 h-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => setLevel("Approved")}>Approved</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setLevel("On Hold")}>On Hold</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setLevel("Declined")}>Declined</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon">
@@ -120,6 +114,7 @@ export default function VendorApproval() {
                 </TableCell>
               </TableRow>
             </TableBody>
+
           </Table>
         </div>
 

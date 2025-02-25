@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useRouter } from "next/navigation"
 import { useSearch } from "@/components/search-provider"
+import { SearchProvider } from "@/components/search-provider"
 
 interface RFIResponse {
   id: number
@@ -48,14 +49,14 @@ const initialData: RFIResponse[] = [
   },
 ]
 
-export default function RFIResponsePage() {
+function RFIResponsePage() {
   const router = useRouter()
   const { searchTerm, setSearchTerm } = useSearch()
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
 
   const filteredData = initialData.filter((item) =>
-    Object.values(item).some((value) => value && value.toString().toLowerCase().includes(searchTerm.toLowerCase())),
+    Object.values(item).some((value) => value && value.toString().toLowerCase().includes(searchTerm.toLowerCase()))
   )
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage)
@@ -111,9 +112,8 @@ export default function RFIResponsePage() {
                 <TableCell>{row.lastUpdated}</TableCell>
                 <TableCell>
                   <span
-                    className={`px-2 py-1 rounded-full text-xs ${
-                      row.status === "Active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
-                    }`}
+                    className={`px-2 py-1 rounded-full text-xs ${row.status === "Active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+                      }`}
                   >
                     {row.status}
                   </span>
@@ -161,3 +161,10 @@ export default function RFIResponsePage() {
   )
 }
 
+export default function RFIResponsePageWrapper() {
+  return (
+    <SearchProvider>
+      <RFIResponsePage />
+    </SearchProvider>
+  )
+}
