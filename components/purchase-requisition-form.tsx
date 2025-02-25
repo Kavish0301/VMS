@@ -9,7 +9,7 @@ import { ProductDetails } from "@/components/product-details"
 import { SOWChecklist } from "@/components/sow-checklist"
 import { Attachments } from "@/components/attachments"
 import { QuerySection } from "@/components/query-section"
-import type { PurchaseRequisition } from "@/lib/types"
+import type { Attachment, PurchaseRequisition } from "@/lib/types"
 
 const initialState: PurchaseRequisition = {
   tempId: "TEMP-" + Math.random().toString(36).substring(7).toUpperCase(),
@@ -23,11 +23,14 @@ const initialState: PurchaseRequisition = {
   purpose: "",
   products: [],
   services: [],
-  checklist: [
+  sowChecklist: [
     { id: "1", sNo: 1, checklist: "Budgeted Expenditure", comments: "", remarks: "" },
     { id: "2", sNo: 2, checklist: "Funds Available", comments: "", remarks: "" },
   ],
   total: 0,
+  attachments: [],
+  query: "",
+  status: "draft"
 }
 
 export function PurchaseRequisitionForm() {
@@ -154,23 +157,30 @@ export function PurchaseRequisitionForm() {
                 services,
                 total: calculateTotal(prev.products, services),
               }))
-            }}
-          />
+            }} purpose={""} onPurposeChange={function (purpose: string): void {
+              throw new Error("Function not implemented.")
+            }} />
         </TabsContent>
 
         <TabsContent value="sow">
           <SOWChecklist
-            checklist={formData.checklist}
+            checklist={formData.sowChecklist}
             onChange={(checklist) => setFormData((prev) => ({ ...prev, checklist }))}
           />
         </TabsContent>
 
         <TabsContent value="attachment">
-          <Attachments />
+          <Attachments attachments={[]} onChange={function (attachments: Attachment[]): void {
+            throw new Error("Function not implemented.")
+          }} />
         </TabsContent>
 
         <TabsContent value="query">
-          <QuerySection />
+          <QuerySection query={""} onChange={function (query: string): void {
+            throw new Error("Function not implemented.")
+          }} onSubmit={function (): void {
+            throw new Error("Function not implemented.")
+          }} />
         </TabsContent>
       </Tabs>
 
