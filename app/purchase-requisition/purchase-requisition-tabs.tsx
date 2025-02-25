@@ -10,10 +10,10 @@ export function PurchaseRequisitionTabs() {
   return (
     <div className="min-h-screen bg-[#F8F8F8] flex">
       {/* Sidebar */}
-      <div className="w-64 min-h-screen shadow-lg">
+      <div className="w-64 min-h-screen shadow-lg ">
         <Sidebar />
       </div>
-      <div className="h-full flex flex-col">
+      <div className="h-full flex flex-col " style={{ width: "85vw" }}>
         <header className="border-b px-6 py-3 flex items-center justify-between">
           <div className="text-lg font-semibold">Vendor Management</div>
           <div className="flex items-center gap-4">

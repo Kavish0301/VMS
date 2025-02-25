@@ -115,12 +115,12 @@ export function PurchaseRequisitionPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8] flex">
+    <div className="min-h-screen bg-[#F8F8F8] flex ">
       {/* Sidebar */}
-      <div className="w-64 min-h-screen bg-white shadow-lg">
+      {/* <div className="w-64 min-h-screen bg-white shadow-lg">
         <Sidebar />
-      </div>
-      <div className="p-6 max-w-[1200px] mx-auto">
+      </div> */}
+      <div className="p-6 max-w-[1200px] mx-auto " style={{ width: "85vw" }}>
         <h1 className="text-2xl font-semibold mb-6">Purchase Requisition</h1>
 
         {showSuccess && (

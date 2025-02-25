@@ -27,7 +27,7 @@ export function Sidebar() {
         <SidebarLink href="/rfi-response" icon={<MessageSquareIcon size={18} />} label="RFI Response" />
         <SidebarLink href="/purchase-requisition" icon={<HelpCircleIcon size={18} />} label="Purchase Requisition" />
 
-        <SidebarLink href="/logout" icon={<LogOutIcon size={18} />} label="Log out" />
+        <SidebarLink href="/" icon={<LogOutIcon size={18} />} label="Log out" />
       </nav>
     </div>
   )
